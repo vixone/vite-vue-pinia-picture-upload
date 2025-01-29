@@ -22,11 +22,13 @@ const routes = [
 
         if (userStore.user === null && token) {
           await userStore.fetchUser();
+        } else {
+          throw error; // redirect to login if no token
         }
 
         next();
       } catch (error) {
-        next(false); // Cancel navigation if data fetching fails
+        next('/login'); // Cancel navigation if data fetching fails
       }
     },
   },
