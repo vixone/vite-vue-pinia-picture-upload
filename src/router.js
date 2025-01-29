@@ -20,11 +20,11 @@ const routes = [
 
         const token = localStorage.getItem('api_token');
 
-        if (userStore.user === null && token) {
-          await userStore.fetchUser();
-        } else {
+        if (!token || (userStore.user === null && !token)) {
           throw error; // redirect to login if no token
         }
+
+        await userStore.fetchUser();
 
         next();
       } catch (error) {
