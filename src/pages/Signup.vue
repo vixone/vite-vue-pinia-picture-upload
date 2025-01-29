@@ -73,7 +73,7 @@
 <script setup>
 import GuestLayout from "../components/GuestLayout.vue";
 import { ref } from "vue";
-import axiosClient from "../axios";
+import useUserStore from "../store/user.js";
 import router from "../router";
 
 const data = ref({
@@ -89,16 +89,17 @@ const errors = ref({
   password: [],
 });
 
+const userStore = useUserStore();
+
 function submit() {
-  axiosClient.get('/sanctum/csrf-cookie').then(response => {
-    axiosClient.post("/register", data.value)
-      .then(response => {
-        router.push({ name: 'Home' })
-      })
-      .catch(error => {
-        errors.value = error.response.data.errors;
-      })
-  });
+  userStore.registerUser(data.value)
+    .then(() => {
+      router.push({ name: 'Home' });  // Redirect on successful login
+    })
+    .catch(error => {
+      console.error('Signup failed:', error);
+      errors.value = error.response.data.errors;
+    });
 }
 
 </script>

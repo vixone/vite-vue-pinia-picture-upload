@@ -1,35 +1,3 @@
-<script setup>
-
-import { onMounted, ref } from "vue";
-import axiosClient from "../axios.js";
-
-const images = ref([])
-
-async function copyImageUrl(url) {
-  await navigator.clipboard.writeText(url);
-}
-
-function deleteImage(id) {
-  if (!confirm("Are you sure you want to delete this image?")) {
-    return;
-  }
-
-  axiosClient.delete(`/api/image/${id}`)
-    .then(response => {
-      images.value = images.value.filter(image => image.id !== id)
-    })
-}
-
-onMounted(() => {
-  axiosClient.get('/api/image')
-    .then((response) => {
-      console.log(response.data);
-      images.value = response.data;
-    })
-})
-
-</script>
-
 <template>
   <header class="bg-white shadow">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -63,4 +31,34 @@ onMounted(() => {
   </main>
 </template>
 
+<script setup>
+
+import { onMounted, ref } from "vue";
+import axiosClient from "../axios.js";
+
+const images = ref([])
+
+async function copyImageUrl(url) {
+  await navigator.clipboard.writeText(url);
+}
+
+function deleteImage(id) {
+  if (!confirm("Are you sure you want to delete this image?")) {
+    return;
+  }
+
+  axiosClient.delete(`/api/image/${id}`)
+    .then(response => {
+      images.value = images.value.filter(image => image.id !== id)
+    })
+}
+
+onMounted(() => {
+  axiosClient.get('/api/image')
+    .then((response) => {
+      images.value = response.data;
+    })
+})
+
+</script>
 <style scoped></style>

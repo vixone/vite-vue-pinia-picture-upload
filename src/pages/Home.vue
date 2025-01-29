@@ -44,12 +44,15 @@ import { PhotoIcon } from '@heroicons/vue/24/solid'
 import { ref } from 'vue';
 import axiosClient from '../axios';
 import router from '../router';
+import useUserStore from "../store/user.js";
 
 
 const data = ref({
   image: null,
   label: '',
 });
+
+const user = useUserStore();
 
 function submit() {
   const formData = new FormData();

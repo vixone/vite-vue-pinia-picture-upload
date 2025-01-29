@@ -52,25 +52,26 @@
 <script setup>
 import GuestLayout from "../components/GuestLayout.vue";
 import { ref } from "vue";
-import axiosClient from "../axios";
+import useUserStore from "../store/user.js";
 import router from "../router";
 
 const data = ref({
   email: '',
   password: '',
 });
+const userStore = useUserStore();
 
 const errorMessage = ref('');
 
 function submit() {
-  axiosClient.get('/sanctum/csrf-cookie').then(response => {
-    axiosClient.post('/login', data.value)
-      .then(res => {
-        router.push({ name: 'Home' });
-      });
-  }).catch(error => {
-    errorMessage.value = error.response.data.message;
-  });
+  userStore.loginUser(data.value)
+    .then(() => {
+      router.push({ name: 'Home' });  // Redirect on successful login
+    })
+    .catch(error => {
+      console.error('Loginfailed:', error);
+      errorMessage.value = error.response?.data?.message || 'Login failed.';
+    });
 };
 
 </script>

@@ -36,7 +36,7 @@
                     <span class="absolute -inset-1.5" />
                     <span class="sr-only">Open user menu</span>
                     <img class="size-8 rounded-full" src="https://randomuser.me/api/portraits/women/26.jpg" alt="" />
-                    <span class="text-white ml-3"> {{ user.name }} </span>
+                    <span class="text-white ml-3"> {{ user?.name || 'Guest' }} </span>
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition ease-out duration-100"
@@ -101,7 +101,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import useUserStore from "../store/user.js";
-import axiosClient from "../axios";
 import router from "../router";
 import { computed } from "vue";
 
@@ -115,7 +114,7 @@ const navigation = [
 ]
 
 function logout() {
-  axiosClient.post('/logout')
+  userStore.logout()
     .then(res => {
       router.push({ name: 'Login' });
     });

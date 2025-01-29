@@ -6,20 +6,6 @@ import Login from "./pages/Login.vue";
 import Signup from "./pages/Signup.vue";
 import useUserStore from "./store/user.js";
 
-// helper function to check if the user is authenticated
-async function checkIfLoggedIn(userStore, next) {
-  try {
-    await userStore.fetchUser();
-    if (userStore.user !== null) {
-      next({ name: 'Home' });  // Redirect to homepage if logged in
-    } else {
-      next(); // Allow access to login or register
-    }
-  } catch (error) {
-    next();  // Proceed even if there's an error (could log the error if needed)
-  }
-}
-
 const routes = [
   {
     path: "/",
@@ -31,7 +17,13 @@ const routes = [
     beforeEnter: async (to, from, next) => {
       try {
         const userStore = useUserStore();
-        await userStore.fetchUser();
+
+        const token = localStorage.getItem('api_token');
+
+        if (userStore.user === null && token) {
+          await userStore.fetchUser();
+        }
+
         next();
       } catch (error) {
         next(false); // Cancel navigation if data fetching fails
@@ -42,19 +34,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
-    beforeEnter: (to, from, next) => {
-      const userStore = useUserStore();
-      checkIfLoggedIn(userStore, next);
-    },
   },
   {
     path: '/signup',
     name: 'Signup',
     component: Signup,
-    beforeEnter: (to, from, next) => {
-      const userStore = useUserStore();
-      checkIfLoggedIn(userStore, next);
-    },
   },
   {
     path: '/:pathMatch(.*)*',
