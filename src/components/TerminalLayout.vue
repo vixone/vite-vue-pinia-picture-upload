@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen bg-black text-green-400 font-mono p-4 overflow-hidden">
+  <div class="w-screen h-screen mocha text-green-400 font-mono p-4 overflow-hidden">
     <div class="h-full overflow-y-auto">
       <RouterView />
     </div>
@@ -8,4 +8,8 @@
 
 <script setup>
 </script>
-<style scoped></style>
+<style scoped>
+.mocha {
+  background-color: #1E1E2E;
+}
+</style>

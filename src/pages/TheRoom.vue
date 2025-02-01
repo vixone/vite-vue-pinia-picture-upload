@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full overflow-y-auto">
+  <div class="h-full overflow-y-auto" @click="focusInput">
     <div v-for="(line, index) in history" :key="index" class="mb-1">
       {{ line }}
     </div>
