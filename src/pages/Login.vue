@@ -16,7 +16,7 @@
             type="password" @keyup.enter="login" />
         </div>
 
-        <button type="submit"
+        <button type="submit" @click="login"
           class="w-full mt-6 border border-green-400 py-2 hover:bg-green-400 hover:text-black transition">
           Login
         </button>
@@ -54,7 +54,7 @@ const errorMessage = ref('');
 function login() {
   userStore.loginUser(data.value)
     .then(() => {
-      router.push({ name: 'Terminal' });  // Redirect on successful login
+      router.push({ name: 'TheRoom' });  // Redirect on successful login
     })
     .catch(error => {
       console.error('Loginfailed:', error);

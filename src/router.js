@@ -1,19 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DefaultLayout from "./components/DefaultLayout.vue";
-import Home from "./pages/Home.vue";
-import MyImages from "./pages/MyImages.vue";
+import TerminalLayout from "./components/TerminalLayout.vue";
 import Login from "./pages/Login.vue";
 import Signup from "./pages/Signup.vue";
-import Terminal from "./pages/Terminal.vue";
+import TheRoom from "./pages/TheRoom.vue";
 import useUserStore from "./store/user.js";
 
 const routes = [
   {
     path: "/",
-    component: DefaultLayout,
+    component: TerminalLayout,
     children: [
-      { path: '/', name: 'Home', component: Home },
-      { path: '/images', name: 'MyImages', component: MyImages },
+      { path: '/the-room', name: 'TheRoom', component: TheRoom },
     ],
     beforeEnter: async (to, from, next) => {
       try {
@@ -44,13 +41,8 @@ const routes = [
     component: Signup,
   },
   {
-    path: '/terminal',
-    name: 'Terminal',
-    component: Terminal,
-  },
-  {
     path: '/:pathMatch(.*)*',
-    redirect: '/',
+    redirect: '/the-room',
   },
 ];
 
