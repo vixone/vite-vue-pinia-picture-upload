@@ -4,6 +4,7 @@ import Home from "./pages/Home.vue";
 import MyImages from "./pages/MyImages.vue";
 import Login from "./pages/Login.vue";
 import Signup from "./pages/Signup.vue";
+import Terminal from "./pages/Terminal.vue";
 import useUserStore from "./store/user.js";
 
 const routes = [
@@ -41,6 +42,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup,
+  },
+  {
+    path: '/terminal',
+    name: 'Terminal',
+    component: Terminal,
   },
   {
     path: '/:pathMatch(.*)*',
